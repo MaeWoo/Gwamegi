@@ -56,13 +56,20 @@ class fifth{
 		System.out.print("논리 연산을 입력하세요>>");
 		String a = scan.next();
 		String b = scan.next();
-		a = scan.next();
+		String c = scan.next();
 		switch(b) {
-		case "OR":System.out.println("true");break;
-		case "AND":System.out.println("false");break;
+		case "OR":
+			if(a.equals("false") && c.equals("false"))
+				System.out.println("false");
+			else
+				System.out.println("true");break;
+		case "AND" :
+			if(a.equals("true") && c.equals("true"))
+				System.out.println("true");
+			else
+				System.out.println("false");break;
 		}
 		scan.close();
-
 	}
 }
 class sixth{
