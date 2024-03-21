@@ -1,4 +1,4 @@
-///////////////////////////연습문제
+///////////////////////////실습문제
 package practice2;
 
 import java.util.Scanner;
@@ -187,7 +187,7 @@ class tenth{
 		}
 	}
 }
-/////////////////////////실습문제
+/////////////////////////보너스문제
 package practice2;
 
 import java.util.Scanner;
