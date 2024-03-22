@@ -1,0 +1,224 @@
+package project1;
+import java.util.InputMismatchException; // third 메서드
+import java.util.Scanner;
+public class project {
+	public static void main(String[] args) {
+		one();
+		two();
+		three();
+		four();
+		five();
+		six();
+		seven();
+		eight();
+		nine();
+	}
+	static void one() {
+		Scanner scan = new Scanner(System.in);
+		System.out.print("알파벳 한 문자를 입력하세요>>");
+		String a = scan.next();
+		char b = a.charAt(0);
+		
+		for(int i=97;i<=b;i++) {
+			for(int j=i;j<=b;j++) {
+				System.out.print((char)j);
+			}
+			System.out.println();
+		}
+		scan.close();
+	}
+	static void two() {
+		Scanner scan = new Scanner(System.in);
+		System.out.print("정수 10개 입력>>");
+		int a[] = new int[10];
+		int awr[] = new int[10];
+		int k=0;
+		for(int i=0;i<10;i++) {
+			a[i] = scan.nextInt();
+			if(a[i]%3 == 0) {
+				awr[k] = a[i];
+				k++;
+			}
+			else {
+				awr[i] = -1;
+			}
+		}
+		for(int m : awr) {
+			if(m > 0)
+				System.out.print(m + " ");
+		}
+		scan.close();
+	}
+	static void three() {
+		Scanner scan = new Scanner(System.in);
+		System.out.print("정수를 입력하세요>>");
+		try {
+			int a = scan.nextInt();
+			if(a %2 == 0)
+				System.out.println("짝수");
+			else
+				System.out.println("홀수");
+		}
+		catch (InputMismatchException e){
+			System.out.println("수를 입력하지 않아 프로그램 종료합니다.");
+		}
+		scan.close();
+	}
+	static void four() {
+		Scanner scan = new Scanner(System.in);
+		char day[] = {'일','월','화','수','목','금','토'};
+		while(true) {
+			System.out.print("정수를 입력하세요>>");
+			try {
+				int a = scan.nextInt();
+				if(a <0) {
+					System.out.println("프로그램 종료합니다...");
+					break;
+				}
+				else {
+					int temp = a%7;
+					System.out.println(day[temp]);
+				}
+			}
+			catch(InputMismatchException e){
+				System.out.println("경고! 수를 입력하지 않았습니다.");
+				scan.next();
+				continue;
+			}
+		}
+		scan.close();
+	}
+	static void five() {
+		Scanner scan = new Scanner(System.in);
+		System.out.print("정수 10개 입력>>");
+		int a[]	= new int[10];
+		int idx =0, temp;
+		for(int i=0;i<10;i++) {
+			a[i] = scan.nextInt();
+		}
+		for(int j=0;j<10;j++) {
+			int max=-2100000000;
+			for(int k = j;k<10;k++) {
+				if(a[k] > max) {
+					max = a[k];
+					idx = k;
+				}
+			}
+			a[idx] = a[j];
+			a[j] = max;
+		}
+		for(int i = 9;i>=0;i--) {
+			System.out.print(a[i] + " ");
+		}
+		scan.close();
+	}
+	static void six() {
+		Scanner scan = new Scanner(System.in);
+		String eng[] = {"student","love","java","happy","future"};
+		String kor[] = {"학생","사랑","자바","행복한","미래"};
+		String word;
+		int idx = 0;
+		while(true) {
+			System.out.print("영어 단어를 입력하세요>>");
+			word = scan.next();
+			if(word.equals("exit")) {
+				System.out.println("종료합니다...");
+				break;	
+			}	
+			for(int i=0;i<5;i++) {
+				if(word.equals(eng[i])) {
+					idx = i;
+					System.out.println(kor[idx]);
+					break;
+				}
+				if(i ==4)
+					System.out.println("그런 영어 단어가 없습니다.");
+			}
+		}
+	}
+	static void seven() {
+		for(int i=1;i<=99;i++) {
+			if(i>=10) {
+				if((i/10)%3 ==0 ||(i/10)%6 ==0||(i/10)%9 ==0 ) {
+					if((i%10)%3 ==0 ||(i%10)%6 ==0||(i%10)%9 ==0) {
+						System.out.println(i + "박수두번");	
+					}
+					else {
+						System.out.println(i + "박수한번");
+					}
+				}
+				else{
+					if (((i%10)%3 ==0 ||(i%10)%6 ==0||(i%10)%9 ==0) && i%10 !=0) {
+						System.out.println(i + "박수한번");	
+					}
+				}
+			}
+			else {
+				if(i%3 ==0||i%6==0||i%9==0)
+					System.out.println(i + "박수한번");
+			}
+		}
+	}
+	static void eight() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("컴퓨터와 가위 바위 보 게임을 합니다.");
+		String str[] = {"가위","바위","보"};
+		while(true) {
+			System.out.print("가위 바위 보!>");
+			String user = scan.next();
+			int n = (int)(Math.random()*3);
+			String computer = str[n];
+			if(user.equals("가위")) {
+				if(computer.equals("가위"))
+					System.out.println("사용자 = " + user +" , 컴퓨터 = " + computer + " , 비겼습니다.");
+				else if(computer.equals("바위"))
+					System.out.println("사용자 = " + user +" , 컴퓨터 = " + computer + " , 컴퓨터가 이겼습니다.");
+				else if(computer.equals("보"))
+					System.out.println("사용자 = " + user +" , 컴퓨터 = " + computer + " , 사용자가 이겼습니다.");
+			}
+			else if(user.equals("바위")) {
+				if(computer.equals("가위"))
+					System.out.println("사용자 = " + user +" , 컴퓨터 = " + computer + " , 사용자가 이겼습니다.");
+				else if(computer.equals("바위"))
+					System.out.println("사용자 = " + user +" , 컴퓨터 = " + computer + " , 비겼습니다.");
+				else if(computer.equals("보"))
+					System.out.println("사용자 = " + user +" , 컴퓨터 = " + computer + " , 컴퓨터가 이겼습니다.");
+			}
+			else if(user.equals("보")) {
+				if(computer.equals("가위"))
+					System.out.println("사용자 = " + user +" , 컴퓨터 = " + computer + " , 컴퓨터가 이겼습니다.");
+				else if(computer.equals("바위"))
+					System.out.println("사용자 = " + user +" , 컴퓨터 = " + computer + " , 사용자가 이겼습니다.");
+				else if(computer.equals("보"))
+					System.out.println("사용자 = " + user +" , 컴퓨터 = " + computer + " , 비겼습니다.");
+			}
+			else if(user.equals("그만"))
+				System.out.println("게임을 종료합니다..."); break;
+		}
+	}
+	static void nine() {
+		int intArray[][];
+		intArray = new int[3][4];
+		
+		for(int i=0;i<3;i++) {
+			for(int j=0;j<4;j++) {
+				intArray[i][j] = (int)(Math.random()*10);
+			}
+		}
+		for(int i=0;i<intArray.length;i++) {
+			for(int j=0;j<intArray[0].length;j++) {
+				System.out.print(intArray[i][j] +" ");
+			}
+			System.out.println();
+		}
+		int i=0,sum=0;
+		while(i<3) {
+			for(int j =0;j<4;j++) {
+				sum += intArray[i][j];
+			}
+			i++;
+		}
+		System.out.println("합은 " + sum);
+	}
+}
+
