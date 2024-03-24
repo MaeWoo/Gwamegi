@@ -1,0 +1,70 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+	int count, price, floor = -1, top = -1;
+	int queue[2000001] = { 0 };
+	char command[6] = { 0 };
+	scanf("%d", &count);
+	for (int i = 0; i < count; i++) {
+		scanf("%s", command);
+		if (strcmp(command, "push") == 0) {
+			if (floor == -1) {
+				floor++;
+			}
+			scanf("%d", &price);
+			queue[++top] = price;
+		}
+		else if (strcmp(command, "pop") == 0) {
+			if (floor > top) {
+				printf("-1\n");
+			}
+			else if (top > -1) {
+				printf("%d\n", queue[floor]);
+				floor++;
+			}
+			else {
+				printf("-1\n");
+			}
+		}
+		else if (strcmp(command, "size") == 0) {
+			if (top > -1) {
+				printf("%d\n", top - floor + 1);
+			}
+			else {
+				printf("0\n");
+			}
+		}
+		else if (strcmp(command, "empty") == 0) {
+			if (top - floor + 1 == 0) {
+				printf("1\n");
+			}
+			else {
+				printf("0\n");
+			}
+		}
+		else if (strcmp(command, "front") == 0) {
+			if (top - floor + 1 == 0) {
+				printf("-1\n");
+			}
+			else if (top > -1) {
+				printf("%d\n", queue[floor]);
+			}
+			else {
+				printf("-1\n");
+			}
+		}
+		else if (strcmp(command, "back") == 0) {
+			if (top - floor + 1 == 0) {
+				printf("-1\n");
+			}
+			else if (top > -1) {
+				printf("%d\n", queue[top]);
+			}
+			else {
+				printf("-1\n");
+			}
+		}
+	}
+}
