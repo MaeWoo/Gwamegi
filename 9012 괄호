@@ -1,0 +1,39 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+	int a = 0;
+	char list[51] = { 0 };
+	int count = 0;
+	int check = 0;
+	scanf("%d", &a);
+	for (int i = 0; i < a; i++) {
+		scanf("%s", &list);
+		count = 0;
+		check = 0;
+		for (int j = 0; j < strlen(list); j++) {
+			if (list[j] == ')' && count == 0) {
+				printf("NO\n");
+				check++;
+				break;
+			}
+			else if (list[j] == '(') {
+				count++;
+			}
+			else if (list[j] == '(' && count != 0) {
+				printf("NO\n");
+				break;
+			}
+			else if (list[j] == ')' && count != 0) {
+				count--;
+			}
+		}
+		if (count == 0 && check == 0) {
+			printf("YES\n");
+		}
+		else if (count != 0) {
+			printf("NO\n");
+		}
+	}
+}
