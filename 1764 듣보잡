@@ -63,3 +63,4 @@ int main() {
 		printf("%s\n", awr[i].name);
 	}
 }
+ 
