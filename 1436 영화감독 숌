@@ -31,3 +31,4 @@ int main() {
 	awr = shom(n);
 	printf("%d", awr);
 }
+ 
