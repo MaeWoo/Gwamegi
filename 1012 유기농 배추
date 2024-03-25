@@ -130,3 +130,4 @@ int main() {
 		printf("%d\n", awr[i]);
 	}
 }
+ 
