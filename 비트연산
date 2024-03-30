@@ -1,0 +1,40 @@
+
+#include <stdio.h>
+
+int getBit(int x, int n) {
+    x = x & (0x1 << n);
+    return x >> n;
+}
+int setBit(int x, int n) {
+    return x | (0x1 << n);
+}
+int clearBit(int x, int n) {
+    return x & ~(0x1 << n);
+}
+int toggleBit(int x, int n) {
+    return x ^ (0x1 << n);
+}
+int isPowerOfTwo(int x) {
+    return ((x & (x - 1)) || 0) ^ 1;
+}
+int main() {
+    printf("%d\n", -12 >> 1);
+    printf("getBit(170, 3) = %d\n", getBit(170, 3));
+    printf("getBit(0, 0) = %d\n", getBit(0, 0));
+
+    printf("setBit(170, 1) = %d\n", setBit(170, 1));
+    printf("setBit(-1, 0) = %d\n", setBit(-1, 0));
+    printf("setBit(1, 1) = %d\n", setBit(1, 1));
+
+    printf("clearBit(170, 3) = %d\n", clearBit(170, 3));
+    printf("clearBit(-1, 0) = %d\n", clearBit(-1, 0));
+    printf("clearBit(1, 0) = %d\n", clearBit(1, 0));
+
+    printf("toggleBit(170, 1) = %d\n", toggleBit(170, 1));
+    printf("toggleBit(-1, 1) = %d\n", toggleBit(-1, 1));
+    printf("toggleBit(1, 1) = %d\n", toggleBit(1, 1));
+
+    printf("isPowerOfTwo(16) = %d\n", isPowerOfTwo(16));
+    printf("isPowerOfTwo(-16) = %d\n", isPowerOfTwo(-16));
+    return 0;
+}
