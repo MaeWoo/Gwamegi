@@ -1,6 +1,4 @@
-![KakaoTalk_20240330_185911681](https://github.com/MaeWoo/Gwamegi/assets/162662037/5dc015e6-e78e-4dc3-a7f8-6edd7a9b5532)
-![KakaoTalk_20240330_185911681_01](https://github.com/MaeWoo/Gwamegi/assets/162662037/af278dd3-4572-4f12-8db4-1ff9d9ca4696)
-![KakaoTalk_20240330_185911681_02](https://github.com/MaeWoo/Gwamegi/assets/162662037/3b95a863-01a3-4024-80df-74d9ebca5dd4)
+
 #include <stdio.h>
 
 int getBit(int x, int n) {
