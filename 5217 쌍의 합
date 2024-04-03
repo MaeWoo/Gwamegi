@@ -1,0 +1,29 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+int main() {
+	int m,n;
+	scanf("%d", &m);
+	for (int i = 0; i < m; i++) {
+		scanf("%d", &n);
+		int low=1;
+		int high=n-1;
+		printf("Pairs for %d:",n);
+		if (n == 1) {
+			printf("\n");
+		}
+		for (int j = 0; j < n / 2; j++) {
+			if (low != high) {
+				printf(" %d %d", low, high);
+				if (low+1 < high -1 && low + 1 != high - 1 && j != n/2-1) {
+					printf(",");
+				}
+			}
+			if(low == high || j == n/2-1){
+				printf("\n");
+			}
+			low++;
+			high--;
+		}
+	}
+}
