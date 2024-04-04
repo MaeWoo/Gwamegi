@@ -1,0 +1,42 @@
+package practice;
+import java.util.Scanner;
+
+class Phone{
+	String name;String tel;
+	public Phone() {}
+	public void Search(String name) {
+		System.out.println(this.name + "의 번호는 " + this.tel + " 입니다.");
+	}
+}
+public class PhoneManager {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.print("인원수>>");
+		int 인원수 = scan.nextInt();
+		String temp;
+		Phone [] p = new Phone[인원수];
+		for(int i=0;i<인원수;i++) {
+			System.out.print("이름과 전화번호(번호는 연속적으로 입력)>>");
+			p[i] = new Phone();
+			p[i].name = scan.next();p[i].tel = scan.next();
+		}
+		System.out.println("저장되었습니다..");
+		while(true) {
+			System.out.print("검색할 이름>>");
+			temp = scan.next();
+			if(temp.equals("exit")) {
+				System.out.println("프로그램을 종료합니다...");
+				System.out.println("202034013 김태우");
+				break;
+			}
+			for(int i=0;i<인원수;i++) {
+				if(temp.equals(p[i].name)) {
+					p[i].Search(temp);
+				}
+				else if(i == 인원수-1) {
+					System.out.println(temp + " 이 없습니다.");
+				}
+			}
+		}
+	}
+}
