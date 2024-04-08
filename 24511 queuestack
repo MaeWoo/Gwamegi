@@ -1,0 +1,65 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct queuestack {
+	int a;
+	int b;
+	int idx;
+} qs;
+// 0,1구분해서 정렬
+int Acompare(const void* a, const void* b) {
+	qs num1 = *(qs*)a;
+	qs num2 = *(qs*)b;
+	if (num1.a < num2.a)
+		return -1;
+	if (num1.a > num2.a)
+		return 1;
+	return 0;
+}
+// 0중에서 먼저 들어온애들 순으로 정렬
+int Bcompare(const void* a, const void* b) {
+	qs num1 = *(qs*)a;
+	qs num2 = *(qs*)b;
+	if (num1.idx < num2.idx)
+		return -1;
+	if (num1.idx > num2.idx)
+		return 1;
+	return 0;
+}
+int main() {
+	int n,m,check=0,k=1;
+	scanf("%d", &n);
+	qs* arr = (qs*)malloc(sizeof(qs) * (n + 1));
+	for (int i = 0; i < n; i++) {
+		scanf("%d", &arr[i].a);
+		if (arr[i].a == 0)
+			check++;
+	}
+	for (int i = 0; i < n; i++) {
+		scanf("%d", &arr[i].b);
+		arr[i].idx = i;
+	}
+	qsort(arr, n, sizeof(qs), Acompare);
+	qsort(arr, check, sizeof(qs), Bcompare);
+	scanf("%d", &m);
+	int* C = (int*)malloc(sizeof(int) * (m + 1));
+	int idx = 0;
+	for (int i = 0; i < m; i++) {
+		scanf("%d", &C[i]);
+	}
+	for (int i = 0; i < m; i++) {
+		if (check > 0) {
+			if (check - k >= 0) {
+				printf("%d ", arr[check - k].b);
+				k++;
+			}
+			else {
+				printf("%d ", C[idx]);
+				idx++;
+			}
+		}
+		else
+			printf("%d ", C[i]);
+	}
+}
