@@ -8,7 +8,7 @@ int getBit(int x, int n) {
     return x >> n;
 }
 int setBit(int x, int n) {
-    return x | (0x1 << n);
+    return x | (0x1 << n); 
 }
 int clearBit(int x, int n) {
     return x & ~(0x1 << n);
