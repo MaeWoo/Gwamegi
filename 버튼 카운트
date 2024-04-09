@@ -1,0 +1,50 @@
+// 2번: 초기화, 3번: 1증가, 4번: 1초마다 증가
+
+
+int IN[4]={2,3,4};
+int OUT[10]={6,7,8,9,10,11,12,13};
+int arr[10][8]={
+{1,1,1,0,0,1,1,1},
+{1,0,0,0,0,1,0,0},
+{1,1,0,1,0,0,1,1},
+{1,1,0,1,0,1,1,0},
+{1,0,1,1,0,1,0,0},
+{0,1,1,1,0,1,1,0},
+{0,1,1,1,0,1,1,1},
+{1,1,0,0,0,1,0,0},
+{1,1,1,1,0,1,1,1},
+{1,1,1,1,0,1,0,0}};
+void setup()
+{
+  for(int i=0;i<3;i++){
+    pinMode(IN[i],INPUT);
+  }
+  for(int i=0;i<9;i++){
+	 pinMode(OUT[i],OUTPUT);
+	}
+}
+int count = 0;int check = 0;
+void loop()
+{
+  if(digitalRead(4)){
+    count =0;
+    check =0;
+  }
+  if(digitalRead(3)){
+    count += 1;
+  }
+  for(int i=0;i<8;i++){
+    digitalWrite(OUT[i],!arr[count][i]);
+  }
+  delay(100);
+  if(digitalRead(2)){
+    check =1;
+  }
+  if(check == 1){
+    count +=1;
+  	delay(1000);
+  }
+  if(count >9){
+    count =0;
+  }
+}
