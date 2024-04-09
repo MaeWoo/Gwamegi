@@ -1,0 +1,79 @@
+// LED 4개 개별
+int IN[5]={2,3,4,5};
+  int OUT[5]={10,11,12,13};
+void setup()
+{
+  for(int i=0;i<4;i++){
+    pinMode(OUT[i],INPUT);
+    pinMode(OUT[i],OUTPUT);
+  }
+}
+
+int sw_io;
+void loop()
+{
+  for(int i=2;i<6;i++){
+  	sw_io=digitalRead(i);
+	if(sw_io){
+  		digitalWrite(i+8,HIGH);
+  	}
+  	else{
+    	digitalWrite(i+8,LOW);
+  	}
+  }
+}
+
+
+// 4개 LED 선택 제어
+int IN[5]={2,3,4,5};
+  int OUT[5]={10,11,12,13};
+void setup()
+{
+  for(int i=0;i<4;i++){
+    pinMode(OUT[i],INPUT);
+    pinMode(OUT[i],OUTPUT);
+  }
+}
+
+int sw_io;
+void loop()
+{
+  if(digitalRead(2)){
+    for(int i=0;i<4;i++){
+      digitalWrite(OUT[i],HIGH);    
+    }
+    delay(100);
+    for(int i=0;i<4;i++){
+      digitalWrite(OUT[i],LOW);    
+    }
+    delay(100);
+  }
+  else if(digitalRead(3)){
+    for(int i=0;i<4;i++){
+      digitalWrite(OUT[i],HIGH);
+      delay(100);
+    }
+    for(int i=0;i<4;i++){
+      digitalWrite(OUT[i],LOW);
+      delay(100);
+    }
+  }
+  else if(digitalRead(4)){
+        for(int i=3;i>=0;i--){
+      digitalWrite(OUT[i],HIGH);
+      delay(100);
+    }
+    for(int i=0;i<4;i++){
+      digitalWrite(OUT[i],LOW);
+      delay(100);
+    }
+  }
+  else if(digitalRead(5)){
+    for(int i=0;i<4;i++){
+      digitalWrite(OUT[i],HIGH);
+      delay(100);
+      digitalWrite(OUT[i],LOW);
+      delay(100);
+    }
+  }
+}
