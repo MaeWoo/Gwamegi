@@ -1,0 +1,73 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+int N;
+int* heap;
+
+void swap(int a, int b) {
+	int tmp = heap[a];
+	heap[a] = heap[b];
+	heap[b] = tmp;
+}
+// 퀵정렬
+int compare(const void* a, const void* b) {
+	if (*(int*)a < *(int*)b)
+		return -1;
+	if (*(int*)a > *(int*)b)
+		return 1;
+	return 0;
+}
+// 삽입
+void insert(int val) {
+	int i = 0;
+	N++;
+	i = N;
+	heap[i] = val;
+
+	while (i > 1 && heap[i / 2] > heap[i]) {
+		swap(i / 2, i);
+		i = i / 2;
+	}
+}
+// 교환
+void min_heap(int i) {
+	int smallest = i;
+	int left = 2 * i;
+	int right = 2 * i + 1;
+
+	if (left <= N && heap[left] < heap[i])
+		smallest = left;
+	if (right <= N && heap[right] < heap[smallest])
+		smallest = right;
+	if (smallest != i) {
+		swap(i, smallest);
+		min_heap(smallest);
+	}
+}
+// 삭제 및 반환
+int delete() {
+	int min = heap[1];
+	heap[1] = heap[N--];
+
+	min_heap(1);
+	return min;
+}
+int main() {
+	int cnt = 0, tmp;
+	int m;
+	scanf("%d", &N);
+	m = N;
+	heap = (int*)malloc(sizeof(int) * (N + 1));
+
+	for (int i = 1; i <= N; i++) {
+		scanf("%d", &heap[i]);
+	}
+	qsort(heap, N, sizeof(int), compare);
+	for (int i = 0; i < m - 1; i++) {
+		tmp = delete()+delete();
+		insert(tmp);
+		cnt += tmp;
+	}
+	printf("%d", cnt);
+}
