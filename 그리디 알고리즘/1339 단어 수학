@@ -1,0 +1,115 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct Math {
+	char word[11]; // 단어(문자열)
+	int len; // 길이
+	int price; // 단어 값
+}math;
+typedef struct ALPA {
+	char abc; // 알파벳
+	int value;// 값
+	int degree;// 중요도
+}alpa;
+// 단어 길이 순으로 정렬
+int compare(const void* a, const void* b) {
+	math num1 = *(math*)a;
+	math num2 = *(math*)b;
+	if (num1.len < num2.len)
+		return 1;
+	if (num1.len > num2.len)
+		return -1;
+	return 0;
+}
+// 중요도가 큰 순서로 정렬
+int compare2(const void* a, const void* b) {
+	alpa num1 = *(alpa*)a;
+	alpa num2 = *(alpa*)b;
+	if (num1.degree < num2.degree)
+		return 1;
+	if (num1.degree > num2.degree)
+		return -1;
+	return 0;
+}
+int main() {
+	int n, idx, cnt = 9, check = 0, same = 1;
+	long long sum = 0;
+	char tmp[11], A = 'A';
+	alpa list[11];
+	for (int i = 0; i < 10; i++) {
+		list[i].value = -1;
+		list[i].degree = 0;
+	}
+	scanf("%d", &n);
+	math* arr = (math*)malloc(sizeof(math) * (n + 1));
+	for (int i = 0; i < n; i++) {
+		scanf("%s", tmp);
+		// 입력받은 단어 뒤집어 넣기
+		int lens = strlen(tmp);
+		for (int j = lens - 1; j >= 0; j--) {
+            // 처음 들어온 알파벳 저장
+			if (check == 0) {
+				list[check++].abc = tmp[lens - 1 - j];
+			}
+            // 두번째부터 들어온 알파벳 저장
+			if (check < 10 && check > 0) {
+				for (int k = 0; k < check; k++) {
+                    // 중복 체크
+					if (list[k].abc == tmp[lens - 1 - j]) {
+						same++;
+					}
+				}
+                // 처음 들어온 알파벳이면
+				if (same == 0) {
+					list[check++].abc = tmp[lens - 1 - j];
+				}
+				same = 0;
+			}
+            // 단어 뒤집어서 저장
+			arr[i].word[j] = tmp[lens - 1 - j];
+		}
+        // 길이,단어 값 초기화
+		arr[i].len = strlen(tmp);
+		arr[i].price = 0;
+	}
+    // 단어 길이 순으로 정렬
+	qsort(arr, n, sizeof(math), compare);
+	idx = arr[0].len - 1;
+	// 중요도 계산
+	int add = 1;
+	for (int i = 0; i <= idx; i++) {
+		for (int j = 0; j < n; j++) {
+			for (int k = 0; k < check; k++) {
+				if (list[k].abc == arr[j].word[i]) {
+					list[k].degree += add;
+					break;
+				}
+			}
+		}
+		add *= 10;
+	}
+    // 중요도가 큰 순서로 정렬
+	qsort(list, 10, sizeof(alpa), compare2);
+    // 알파벳 값 지정
+	for (int i = 0; i < check; i++) {
+		list[i].value = cnt--;
+	}
+
+	// 덧셈
+	for (int i = 0; i < n; i++) {
+		int multi = 1;
+		for (int j = 0; j < arr[i].len; j++) {
+			for (int k = 0; k < 10; k++) {
+				if (arr[i].word[j] == list[k].abc) {
+					arr[i].price += list[k].value * multi;
+					multi *= 10;
+					break;
+				}
+			}
+		}
+		sum += arr[i].price;
+	}
+	printf("%lld", sum);
+}
