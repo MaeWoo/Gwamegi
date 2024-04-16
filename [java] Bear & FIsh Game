@@ -1,0 +1,217 @@
+package project6;
+import java.util.Scanner;
+
+abstract class GameObject { // 추상 클래스
+
+	protected int distance; // 한 번 이동 거리
+	protected int x, y; // 현재 위치(화면 맵 상의 위치)
+    
+    
+	public GameObject (int startX, int startY, int distance) { // 초기 위치와 이동 거리 설정
+		this.x = startX;
+		this.y = startY;
+		this.distance = distance;
+	}
+    
+    
+	public int getX() { return x; }
+	public int getY() { return y; }
+    
+    
+	public boolean collide (GameObject p) { // 이 객체가 객체 p와 충돌했으면 true 리턴
+		if (this.x == p.getX() && this.y == p.getY())
+			return true;
+		else
+			return false;
+	}
+    
+    
+	public abstract void move(); // 이동한 후의 새로운 위치로 x, y 변경
+	public abstract char getShape(); // 객체의 모양을 나타내는 문자 리턴
+}
+
+
+
+class Bear extends GameObject {
+
+	public Bear (int startX, int startY, int distance) {
+    
+		super(startX, startY, distance);
+	}
+	
+    
+	public void move() {
+    
+		Scanner scanner = new Scanner(System.in);
+        
+		System.out.print("왼쪽(a), 아래(s), 위(d), 오른쪽(f) >> ");
+		char option = scanner.next().charAt(0);
+        
+        
+		switch(option) {
+			case 'a':
+				if (this.y >= distance)
+					this.y -= this.distance;
+				break;
+			case 's':
+				if (this.x < 10 - this.distance)
+					this.x += this.distance;
+				break;
+			case 'd':
+				if (this.x >= this.distance)
+					this.x -= this.distance;
+				break;
+			case 'f':
+				if (this.y < 20 - this.distance)
+					this.y += this.distance;
+				break;
+		}
+	}
+	
+    
+	public char getShape() {
+    
+		return 'B';
+	}
+}
+
+
+
+class Fish extends GameObject {
+	
+	private int fiveMove [];
+	private int fiveCheck;
+	
+    
+	public Fish (int startX, int startY, int distance) {
+    
+		super(startX, startY, distance);
+		fiveMove = new int [5];
+		fiveCheck = 0;
+	}
+	
+    
+	public void fiveMoving() {
+    
+		int check;
+        
+		while (true) {
+			check = 0;
+            
+			for (int i = 0; i < fiveMove.length; i++) {
+				fiveMove[i] = (int)(Math.random() * 5); // 0:왼쪽, 1:아래, 2:위, 3:오른쪽, 4:제자리
+                
+				if (fiveMove[i] == 4)
+					check++;
+			}
+            
+			if (check == 3)
+				break;
+		}
+	}
+	
+    
+	public void move() {
+    
+		if (fiveCheck == 5) {
+			fiveCheck = 0;
+			fiveMoving();
+		}
+        
+		else if (fiveCheck == 0)
+			fiveMoving();
+		
+		switch (fiveMove[fiveCheck]) {
+			case 0:
+				if (this.y >= this.distance)
+					this.y -= this.distance; 
+				break;
+			case 1:
+				if (this.x >= this.distance)
+					this.x -= this.distance;
+				break;
+			case 2:
+				if (this.x < 10 - this.distance)
+					this.x += this.distance;
+			case 3:
+				if (this.y < 10 - this.distance)
+					this.y += this.distance;
+			case 4:
+				break;
+		}
+		
+		fiveCheck++;
+	}
+	
+    
+	public char getShape() {
+    
+		return '@';
+	}
+}
+
+
+public class Game {
+	
+	private Bear bear;
+	private Fish fish;
+	
+    
+	Game() {
+		bear = new Bear(0, 0, 2);
+		fish = new Fish(6, 6, 1);
+	}
+	
+    
+	public void run() {
+    
+		while(true) {
+			System.out.println();             
+			for(int i = 0; i < 10; i++) {
+				for(int j = 0; j < 20; j++) {
+					if (bear.getX() == i && bear.getY() == j)
+						System.out.print(bear.getShape());
+					else if (fish.getX() == i && fish.getY() == j)
+						System.out.print(fish.getShape());
+					else
+						System.out.print("-");
+				}
+				System.out.println("");
+			}
+			
+            
+			bear.move();
+			fish.move();
+			
+            
+			if (bear.collide(fish)) {
+				for (int i = 0; i < 10; i++) {
+					for (int j = 0; j < 20; j++) {
+						if (bear.getX() == i && bear.getY() == j)
+							System.out.print(bear.getShape());
+						else
+							System.out.print("-");
+					}
+					System.out.println();
+				}
+                
+				finish();
+			}
+		}
+	}
+	
+    
+	public void finish() {
+    
+		System.out.println("Bear Wins!!");
+		System.exit(0);
+	}
+
+
+	public static void main(String[] args) {
+    
+		Game game = new Game();
+		System.out.println("**Bear의 Fish 먹기 게임을 시작합니다.**");
+		game.run();
+	}
+}
