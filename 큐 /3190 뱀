@@ -1,0 +1,101 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+typedef struct Turn {
+	int time;
+	char dir;
+}str;
+typedef struct Snake {
+	int x;
+	int y;
+}str2;
+int main(void) {
+	int N, K, L;
+	int count = 0, head = 0, dir = 1; // 시간,큐 헤드 위치, 뱀 머리 방향
+	int check = 0;
+	str turn[10001]; // 큐
+	int board[102][102] = { 0 };
+	str2 snake[10002]; // 뱀 위치 저장
+	snake[1].x = 1; snake[1].y = 1;
+	int begin = 1, end = 1;
+	str2 snakeHead[2];
+	snakeHead[0].x = 1; snakeHead[0].y = 1; // 뱀 머리 위치 (1,1)로 지정
+	scanf("%d", &N);
+	scanf("%d", &K);
+	int apple1, apple2;
+	for (int i = 0; i < K; i++) {
+		scanf("%d %d", &apple1, &apple2);
+		board[apple1][apple2] = 1;
+	}
+	scanf("%d", &L);
+	for (int i = 0; i < L; i++) {
+		scanf("%d %c", &turn[i].time, &turn[i].dir);
+	}
+	while (check == 0) {
+		// 방향 전환 체크
+		if (head < L) {
+			if (turn[head].time == count) {
+				if (turn[head].dir == 'L') {
+					dir -= 1;
+					if (dir < 0)
+						dir = 3;
+				}
+				else {
+					dir += 1;
+				}
+				head++;
+			}
+		}
+		// 뱀 이동
+		// dir % 4 = 0,1,2,3 ( 위,오른쪽,아래,왼쪽)
+		if (dir % 4 == 0) {
+			snakeHead[0].x -= 1;
+		}
+		else if (dir % 4 == 1) {
+			snakeHead[0].y += 1;
+		}
+		else if (dir % 4 == 2) {
+			snakeHead[0].x += 1;
+		}
+		else if (dir % 4 == 3) {
+			snakeHead[0].y -= 1;
+		}
+		end++;
+		if (board[snakeHead[0].x][snakeHead[0].y] == 1) {
+			snake[end].x = snakeHead[0].x;
+			snake[end].y = snakeHead[0].y;
+			board[snakeHead[0].x][snakeHead[0].y] = 0;
+		}
+		else {
+			snake[end].x = snakeHead[0].x;
+			snake[end].y = snakeHead[0].y;
+			for (int i = begin; i < end; i++) {
+				if (snake[i].x == snake[end].x &&
+					snake[i].y == snake[end].y) {
+					check = 1;
+					break;
+				}
+			}
+			begin++;
+		}
+		count++;
+		/*
+		for (int i = 1; i <= N; i++) {
+			for (int j = 1; j <= N; j++) {
+				printf("%d", board[i][j]);
+			}
+			printf("\n");
+		}
+		for (int i = begin; i <= end; i++) {
+			printf("(%d %d)\n", snake[i].x, snake[i].y);
+		}
+		printf("[%d]\n", dir % 4);
+		printf("-------------------\n");
+		*/
+		if (snake[end].x<1 || snake[end].x > N ||
+			snake[end].y<1 || snake[end].y >N) {
+			check = 1;
+		}
+	}
+	printf("%d", count);
+}

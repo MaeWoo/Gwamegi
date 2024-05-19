@@ -1,0 +1,44 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+int main() {
+	int n, k,idx=0;
+	int que[1001] = { 0 };
+	int awr[1001] = { 0 };
+
+	scanf("%d %d", &n, &k);
+	
+	for (int i = 0; i < n; i++) {
+		que[i] = i + 1;
+	}
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < k; j++) {
+			if (que[idx] != 0 && j == k-1) {
+				awr[i] = que[idx];
+				que[idx] = 0;
+				idx++;
+			}
+			else if (que[idx] != 0) {
+				idx++;
+			}
+			else if (que[idx] == 0) {
+				idx++;
+				j--;
+			}
+			if (idx == n) {
+				idx = 0;
+			}
+		}
+	}
+	printf("<");
+	for (int i = 0; i < n; i++) {
+		if (i < n - 1) {
+
+			printf("%d, ", awr[i]);
+		}
+		else if (i == n - 1) {
+
+			printf("%d>", awr[i]);
+		}
+	}
+}

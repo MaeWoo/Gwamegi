@@ -1,0 +1,77 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <time.h>
+// 토마토 좌표
+typedef struct tomato {
+	int x;
+	int y;
+}tomato;
+
+int main() {
+	int m, n;
+	int count = 0; // 날짜
+	int check = 0; // 토마토가 하나도 안익었는지 체크
+	int tmp = 0;   // while문 탈출용
+	int idx = 0;   // 전날 익은 토마토 개수
+	int head = 0;  // 
+	int tail = 1000000; // 하루에 익은 토마토 개수 (queue 뒤부터)
+	int box[1001][1001];  // 토마토 전체
+	tomato queue[1000001];  // 전날 익은 토마토들 좌표
+	scanf("%d %d", &m, &n);
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			scanf("%d", &box[i][j]);
+			if (box[i][j] == 1) { // 맨 처음 토마토 위치 저장
+				queue[idx].x = j, queue[idx].y = i; idx++;
+			}
+		}
+	}
+	while (1) {
+		for (int i = 0; i < idx; i++) {
+			if (box[queue[i].y + 1][queue[i].x] == 0 && queue[i].y < n-1) { // 상
+				box[queue[i].y + 1][queue[i].x] = 1;
+				// 오늘 익은 토마토 좌표를 idx에 저장하면 오늘이 지나기 전에 익는 토마토 위치가 이상해짐 -> cnt에 저장
+				queue[tail].y = queue[i].y + 1; queue[tail].x = queue[i].x; tail--; check++;
+			}
+			if (box[queue[i].y - 1][queue[i].x] == 0 && queue[i].y > 0) { // 하
+				box[queue[i].y - 1][queue[i].x] = 1;
+				queue[tail].y = queue[i].y - 1; queue[tail].x = queue[i].x; tail--; check++;
+			}
+			if (box[queue[i].y][queue[i].x + 1] == 0 && queue[i].x < m-1) { // 우
+				box[queue[i].y][queue[i].x + 1] = 1;
+				queue[tail].y = queue[i].y; queue[tail].x = queue[i].x + 1; tail--; check++;
+			}
+			if (box[queue[i].y][queue[i].x - 1] == 0 && queue[i].x > 0) { // 좌
+				box[queue[i].y][queue[i].x - 1] = 1;
+				queue[tail].y = queue[i].y; queue[tail].x = queue[i].x - 1; tail--; check++;
+			}
+		}
+		for (int i = 1000000; i > tail; i--) { // 오늘 익은 토마토들 좌표를 전날 익은 토마토 좌표로 바꿈
+			queue[head].x = queue[i].x;
+			queue[head].y = queue[i].y;
+			head++;
+		}
+		if (check == 0) { // 오늘 한개도 안 익었으면
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < m; j++) {
+					if (box[i][j] == 0) { // 더 이상 익을 토마토가 없는데 안 익은 토마토가 남은 경우
+						tmp = -1;
+					}
+				}
+			}
+			if (tmp == -1) {
+				printf("%d", tmp);
+			}
+			else { // 안 익은 토마토 없으면
+				printf("%d", count);
+				tmp = -1;
+			}
+		} // while문 탈출
+		if (tmp == -1) {
+			break;
+		}
+		count++; // 하루 지남
+		idx = head; check = 0; // 초기화
+		tail = 1000000; head = 0; // 초기화
+	}
+}

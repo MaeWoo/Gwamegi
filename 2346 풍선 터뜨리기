@@ -1,0 +1,56 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+int* createArr(int n) {
+	return (int*)malloc(sizeof(int) * (n));
+}
+int deleteArr(int* arr, int idx, int n,int i) {
+	printf("%d ", idx + 1);
+	if (i == n) {
+		return 0;
+	}
+	int temp = arr[idx];
+	arr[idx] = 0;
+	if (temp > 0) {
+		for (int i = 0; i < temp; i++) {
+			if (idx == n) {
+				idx = -1;
+			}
+			if (arr[idx + 1] != 0) {
+				idx++;
+			}
+			else {
+				idx++;
+				i--;
+			}
+		}
+	}
+	else if (temp < 0) {
+		for (int i = 0; i < -1*temp; i++) {
+			if (idx == 0) {
+				idx = n + 1;
+			}
+			if (arr[idx - 1] != 0) {
+				idx--;
+			}
+			else {
+				idx--;
+				i--;
+			}
+		}
+	}
+	return idx;
+}
+int main() {
+	int n;
+	int idx = 0;
+	scanf("%d", &n);
+	int* arr = createArr(n+1);
+	for (int i = 0; i < n; i++) {
+		scanf("%d", &arr[i]);
+	}
+	for (int i = 0; i < n; i++) {
+		idx = deleteArr(arr, idx, n - 1,i);
+	}
+}
