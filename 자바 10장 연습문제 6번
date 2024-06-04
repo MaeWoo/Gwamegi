@@ -1,5 +1,7 @@
 package Unit10;
 
+// 202034013 김태우
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
